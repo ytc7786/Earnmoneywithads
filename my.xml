@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <style>
+        /* CSS styles */
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .balance-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .balance-display {
+            margin-top: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .button-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .get-coin-button, .withdraw-button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML structure -->
+    <div class="top-section">
+        <div class="app-icons">
+            <!-- App icons go here -->
+        </div>
+        <div class="menu-bar">
+            <!-- Menu items: Profile, Log out, etc. -->
+        </div>
+    </div>
+
+    <div class="balance-section">
+        <div class="balance-display" id="balanceDisplay">Loading balance...</div>
+    </div>
+
+    <div class="button-section">
+        <button class="get-coin-button" onclick="addCoins(100)">Get 100 Coin</button>
+        <button class="withdraw-button" onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <script>
+        // JavaScript functionality
+        async function fetchBalance() {
+            try {
+                const response = await fetch('/balance'); // Assumes backend service is hosted on the same domain
+                const data = await response.json();
+                return data.balance;
+            } catch (error) {
+                console.error('Error fetching balance:', error);
+                return null;
+            }
+        }
+
+        async function displayBalance() {
+            const balance = await fetchBalance();
+            if (balance !== null) {
+                document.getElementById('balanceDisplay').innerHTML = `Balance: ${balance} coins`;
+            } else {
+                document.getElementById('balanceDisplay').innerHTML = 'Error fetching balance';
+            }
+        }
+
+        function addCoins(amount) {
+            // Implement coin addition functionality here
+            // You can send a request to the backend to update the balance
+        }
+
+        function withdraw() {
+            // Redirect to withdraw page
+            window.location.href = 'withdraw.html';
+        }
+
+        // Call displayBalance() to fetch and display balance when the page loads
+        window.onload = displayBalance;
+    </script>
+</body>
+</html>
